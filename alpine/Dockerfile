@@ -10,11 +10,10 @@ ENV RMI_PORT 1099
 
 COPY dependencies /tmp/dependencies
 
-RUN cd /tmp/dependencies && \
-    tar -xzf apache-jmeter-${JMETER_VERSION}.tgz -C /usr/local && \
-    unzip -o JMeterPlugins-Standard-1.3.0.zip -d $JMETER_HOME && \
-    unzip -o JMeterPlugins-Extras-1.3.0.zip -d $JMETER_HOME && \
-    unzip -o JMeterPlugins-ExtrasLibs-1.3.0.zip -d $JMETER_HOME && \
+RUN tar -xzf /tmp/dependencies/apache-jmeter-${JMETER_VERSION}.tgz -C /usr/local && \
+    unzip -oq "/tmp/dependencies/JMeterPlugins-*.zip" -d $JMETER_HOME && \
+    apt-get -yqq purge unzip && \
+    apt-get -yqq autoremove && \
     rm -rf /tmp/dependencies
 
 ENV PATH $PATH:$JMETER_BIN

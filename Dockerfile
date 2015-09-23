@@ -8,19 +8,17 @@ ENV JMETER_BIN $JMETER_HOME/bin
 ENV IP 127.0.0.1
 ENV RMI_PORT 1099
 
-RUN set -x && \
-    apt-get update && \
-    apt-get -y install openjdk-7-jre-headless unzip && \
-    apt-get clean && \
+RUN apt-get -qq update && \
+    apt-get -yqq install openjdk-7-jre-headless unzip && \
+    apt-get -q clean && \
     rm -rf /var/lib/apt/lists/*
 
 COPY dependencies /tmp/dependencies
 
-RUN cd /tmp/dependencies && \
-    tar -xzf apache-jmeter-${JMETER_VERSION}.tgz -C /usr/local && \
-    unzip -o JMeterPlugins-Standard-1.3.0.zip -d $JMETER_HOME && \
-    unzip -o JMeterPlugins-Extras-1.3.0.zip -d $JMETER_HOME && \
-    unzip -o JMeterPlugins-ExtrasLibs-1.3.0.zip -d $JMETER_HOME && \
+RUN tar -xzf /tmp/dependencies/apache-jmeter-${JMETER_VERSION}.tgz -C /usr/local && \
+    unzip -oq "/tmp/dependencies/JMeterPlugins-*.zip" -d $JMETER_HOME && \
+    apt-get -yqq purge unzip && \
+    apt-get -yqq autoremove && \
     rm -rf /tmp/dependencies
 
 ENV PATH $PATH:$JMETER_BIN
