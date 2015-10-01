@@ -21,3 +21,12 @@ $   docker run \
         --env IP=[IP] \
         hhcordero/docker-jmeter-server
 ```
+
+### Helper script
+
+[Dockerized JMeter - A Distributed Load Testing Workflow](https://gist.github.com/hhcordero/abd1dcaf6654cfe51d0b)
+
+This is a shell script that make use of [Docker Machine](https://github.com/docker/machine) to provision VM. Currently supported clouds are:
+- Amazon
+- DigitalOcean
+
